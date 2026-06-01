@@ -1,8 +1,8 @@
-const asignacionService = require('../services/asignacion.service');
+const usuarioService = require('../services/usuario.service');
 
 const getAll = async (req, res) => {
   try {
-    const data = await asignacionService.getAllAsignaciones();
+    const data = await usuarioService.getAllUsuarios();
     res.json({ ok: true, data });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, message: error.message });
@@ -11,16 +11,7 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const data = await asignacionService.getAsignacionById(req.params.id);
-    res.json({ ok: true, data });
-  } catch (error) {
-    res.status(error.status || 500).json({ ok: false, message: error.message });
-  }
-};
-
-const getByPersonalId = async (req, res) => {
-  try {
-    const data = await asignacionService.getAsignacionesByPersonalId(req.params.personal_id);
+    const data = await usuarioService.getUsuarioById(req.params.id);
     res.json({ ok: true, data });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, message: error.message });
@@ -29,10 +20,10 @@ const getByPersonalId = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const data = await asignacionService.createAsignacion(req.body);
+    const data = await usuarioService.createUsuario(req.body);
     res.status(201).json({
       ok: true,
-      message: 'Asignación registrada correctamente',
+      message: 'Usuario registrado correctamente',
       data
     });
   } catch (error) {
@@ -42,10 +33,10 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const data = await asignacionService.updateAsignacion(req.params.id, req.body);
+    const data = await usuarioService.updateUsuario(req.params.id, req.body);
     res.json({
       ok: true,
-      message: 'Asignación actualizada correctamente',
+      message: 'Usuario actualizado correctamente',
       data
     });
   } catch (error) {
@@ -55,10 +46,10 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const data = await asignacionService.deleteAsignacion(req.params.id);
+    const data = await usuarioService.deleteUsuario(req.params.id);
     res.json({
       ok: true,
-      message: 'Asignación desactivada correctamente',
+      message: 'Usuario desactivado correctamente',
       data
     });
   } catch (error) {
@@ -69,7 +60,6 @@ const remove = async (req, res) => {
 module.exports = {
   getAll,
   getById,
-  getByPersonalId,
   create,
   update,
   remove

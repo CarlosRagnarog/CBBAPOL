@@ -40,3 +40,22 @@ INSERT INTO personal (
   75
 )
 ON CONFLICT (ci) DO NOTHING;
+INSERT INTO roles (nombre, descripcion)
+VALUES ('ADMIN', 'Administrador del sistema')
+ON CONFLICT (nombre) DO NOTHING;
+
+INSERT INTO usuarios (username, email, password_hash, activo)
+VALUES (
+  'Administrador',
+  'admin@cbbapol.bo',
+  '$2b$10$wR5LyLAdO6r5HGSPG8lC8eKq21aUzOvSuH2guIdJ7I7VZ4CzL1ZyS',
+  true
+)
+ON CONFLICT (email) DO NOTHING;
+
+INSERT INTO usuario_rol (usuario_id, rol_id)
+SELECT u.id, r.id
+FROM usuarios u, roles r
+WHERE u.email = 'admin@cbbapol.bo'
+AND r.nombre = 'ADMIN'
+ON CONFLICT DO NOTHING;

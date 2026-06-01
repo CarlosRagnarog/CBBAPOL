@@ -1,8 +1,8 @@
-const asignacionService = require('../services/asignacion.service');
+const destinoService = require('../services/destino.service');
 
 const getAll = async (req, res) => {
   try {
-    const data = await asignacionService.getAllAsignaciones();
+    const data = await destinoService.getAllDestinos();
     res.json({ ok: true, data });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, message: error.message });
@@ -11,7 +11,7 @@ const getAll = async (req, res) => {
 
 const getById = async (req, res) => {
   try {
-    const data = await asignacionService.getAsignacionById(req.params.id);
+    const data = await destinoService.getDestinoById(req.params.id);
     res.json({ ok: true, data });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, message: error.message });
@@ -20,7 +20,7 @@ const getById = async (req, res) => {
 
 const getByPersonalId = async (req, res) => {
   try {
-    const data = await asignacionService.getAsignacionesByPersonalId(req.params.personal_id);
+    const data = await destinoService.getDestinosByPersonalId(req.params.personal_id);
     res.json({ ok: true, data });
   } catch (error) {
     res.status(error.status || 500).json({ ok: false, message: error.message });
@@ -29,10 +29,10 @@ const getByPersonalId = async (req, res) => {
 
 const create = async (req, res) => {
   try {
-    const data = await asignacionService.createAsignacion(req.body);
+    const data = await destinoService.createDestino(req.body);
     res.status(201).json({
       ok: true,
-      message: 'Asignación registrada correctamente',
+      message: 'Destino registrado correctamente',
       data
     });
   } catch (error) {
@@ -42,10 +42,10 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const data = await asignacionService.updateAsignacion(req.params.id, req.body);
+    const data = await destinoService.updateDestino(req.params.id, req.body);
     res.json({
       ok: true,
-      message: 'Asignación actualizada correctamente',
+      message: 'Destino actualizado correctamente',
       data
     });
   } catch (error) {
@@ -55,10 +55,10 @@ const update = async (req, res) => {
 
 const remove = async (req, res) => {
   try {
-    const data = await asignacionService.deleteAsignacion(req.params.id);
+    const data = await destinoService.deleteDestino(req.params.id);
     res.json({
       ok: true,
-      message: 'Asignación desactivada correctamente',
+      message: 'Destino eliminado correctamente',
       data
     });
   } catch (error) {

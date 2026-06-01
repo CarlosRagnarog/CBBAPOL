@@ -1,7 +1,9 @@
-const express = require('express');
-const personalController = require('../controllers/personal.controller');
-const { validarCrearPersonal } = require('../validators/personal.validator');
+const express = require("express");
+const personalController = require("../controllers/personal.controller");
+const { validarCrearPersonal } = require("../validators/personal.validator");
 const router = express.Router();
+const { verificarToken } = require("../middlewares/auth.middleware");
+const { registrarAuditoria } = require("../middlewares/audit.middleware");
 
 /**
  * @swagger
@@ -36,7 +38,7 @@ const router = express.Router();
  *       200:
  *         description: Lista de personal
  */
-router.get('/', personalController.getAll);
+router.get("/", personalController.getAll);
 
 /**
  * @swagger
@@ -45,7 +47,7 @@ router.get('/', personalController.getAll);
  *     summary: Obtener personal por ID
  *     tags: [Personal]
  */
-router.get('/:id', personalController.getById);
+router.get("/:id", personalController.getById);
 
 /**
 /**
@@ -91,7 +93,13 @@ router.get('/:id', personalController.getById);
  *       201:
  *         description: Personal registrado correctamente
  */
-router.post('/', validarCrearPersonal, personalController.create);
+router.post(
+  "/",
+  verificarToken,
+  validarCrearPersonal,
+  registrarAuditoria("personal", "CREAR"),
+  personalController.create,
+);
 
 /**
  * @swagger
@@ -100,7 +108,13 @@ router.post('/', validarCrearPersonal, personalController.create);
  *     summary: Actualizar personal
  *     tags: [Personal]
  */
-router.put('/:id', validarCrearPersonal, personalController.update);
+router.put(
+  "/:id",
+  verificarToken,
+  validarCrearPersonal,
+  registrarAuditoria("personal", "ACTUALIZAR"),
+  personalController.update,
+);
 
 /**
  * @swagger
@@ -109,6 +123,11 @@ router.put('/:id', validarCrearPersonal, personalController.update);
  *     summary: Eliminar personal lógicamente
  *     tags: [Personal]
  */
-router.delete('/:id', personalController.remove);
+router.delete(
+  "/:id",
+  verificarToken,
+  registrarAuditoria("personal", "ELIMINAR"),
+  personalController.remove,
+);
 
 module.exports = router;
